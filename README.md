@@ -10,4 +10,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Carga de Imagen de las Pruebas de Codigo
 
-![](src/assets/img/Interface.jpg)
+![](src/assets/img/interface.jpg)
