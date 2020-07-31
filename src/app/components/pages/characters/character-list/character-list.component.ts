@@ -1,9 +1,10 @@
-import { Component, OnInit, Inject, HostListener } from '@angular/core';
+import { Component, OnInit, Inject, HostListener, ɵConsole } from '@angular/core';
 import { Character } from '../../../../shared/interfaces/character.interface';
 import { CharacterService } from '../../../../shared/services/character.service';
 import { take, filter } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap, Router, NavigationEnd } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
+import { TrackHttpError } from '@app/shared/models/trackHttpError';
 
 
 type RequestInfo = {
@@ -49,8 +50,6 @@ export class CharacterListComponent implements OnInit {
                  }
   }
 
-
-
    onScrollDown(): void {
       if (this.info.next){
         this.pageNum++;
@@ -77,7 +76,7 @@ export class CharacterListComponent implements OnInit {
   private getCharactersByQuery(): void {
     // Routes
     this.route.queryParams.pipe(take(1)).subscribe( (params: ParamMap) => {
-      console.log('params ->', params);
+     // console.log('params ->', params);
       // tslint:disable-next-line:no-string-literal
       this.query = params['q'];
       this.getDataFromServices();
@@ -89,12 +88,11 @@ export class CharacterListComponent implements OnInit {
       .searchCharacters(this.query, this.pageNum)
       .pipe(take(1))
       .subscribe( (res: any) => {
-       //  console.log('Response->', res);
        if ( res?.results?.length){
         const { info, results } = res;
         this.characters = [ ...this.characters, ...results];
         this.info = info;
        } else{ this.characters = []; }
-    });
+    }, (error: TrackHttpError) => console.log( (error.friendlyMessage)));
   }
 }
