@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "rickandmortyapp-6e904",
+    "prod": "rickandmortyapi",
+    "rickandmortyapp": "rickandmortyapp-6e904"
+  }
+}
